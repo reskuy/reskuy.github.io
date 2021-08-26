@@ -3,14 +3,18 @@ importScripts("precache-manifest.696172bac02de46a719e045a5d32ba83.js", "https://
 self.addEventListener('fetch', function(event) { })
 self.onfetch = function(event) {
     event.respondWith(
-        (async function() {
+         (async function() {
             var cache = await caches.open(cacheName);
             var cachedFiles = await cache.match(event.request);
             if(cachedFiles) {
                 return cachedFiles;
             } else {
-                return fetch(event.request);
+                try {
+                    var response = await fetch(event.request);
+                    await cache.put(event.request, response.clone());
+                    return response;
+                } catch(e) { /* ... */ }
             }
         }())
-    );
+    )
 }
