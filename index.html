@@ -3,8 +3,7 @@
     <body>
         <h1>tes Ya</h1>
     </body>
-</html>
-<script>
+    <script>
     const cipher = salt => {
     const textToChars = text => text.split('').map(c => c.charCodeAt(0));
     const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
@@ -37,3 +36,4 @@ console.log(myCipher('the secret string'))
 const myDecipher = decipher('mySecretSalt')
 console.log(myDecipher("7c606d287b6d6b7a6d7c287b7c7a61666f"))
 </script>
+</html>
