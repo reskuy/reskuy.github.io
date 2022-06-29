@@ -1,5 +1,4 @@
-importScripts("precache-manifest.eaff8d162f68f59cb31fa4a2269809b5.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
-importScripts('https://cdn.webpushr.com/sw-server.min.js');
+importScripts("precache-manifest.eaff8d162f68f59cb31fa4a2269809b5.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js","webpusher.js");
 self.addEventListener('fetch', function(event) {
     event.respondWith(async function() {
     try{
