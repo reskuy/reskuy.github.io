@@ -1,4 +1,4 @@
-import {firebaseConfig} from './config.js';
+import {firebaseConfig} from '../../config.js';
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const firestore = firebase.firestore();
@@ -8,28 +8,30 @@ const forgotForm=document.querySelector('.forgot.form');
 const container=document.querySelector('.container');
 const signupBtn = document.querySelector('.signupbtn');
 const anchors = document.querySelectorAll('a');
-anchors.forEach(anchor => {
-  anchor.addEventListener('click', () => {
-    const id = anchor.id;
-    switch(id){
-    case 'loginLabel':
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'block';
-        forgotForm.style.display = 'none';
-        break;
-      case 'signupLabel':
-        signupForm.style.display = 'block';
-        loginForm.style.display = 'none';
-        forgotForm.style.display = 'none';
-        break;
-      case 'forgotLabel':
-        signupForm.style.display = 'none';
-        loginForm.style.display = 'none';
-        forgotForm.style.display = 'block';
-        break;
-    }
-  });
-});
+// const $ = (selector) => document.querySelector(selector);
+// const $$ = (selector) => document.querySelectorAll(selector);
+// anchors.forEach(anchor => {
+//   anchor.addEventListener('click', () => {
+//     const id = anchor.id;
+//     switch(id){
+//     case 'loginLabel':
+//         signupForm.style.display = 'none';
+//         loginForm.style.display = 'block';
+//         forgotForm.style.display = 'none';
+//         break;
+//       case 'signupLabel':
+//         signupForm.style.display = 'block';
+//         loginForm.style.display = 'none';
+//         forgotForm.style.display = 'none';
+//         break;
+//       case 'forgotLabel':
+//         signupForm.style.display = 'none';
+//         loginForm.style.display = 'none';
+//         forgotForm.style.display = 'block';
+//         break;
+//     }
+//   });
+// });
 signupBtn.addEventListener('click', () => {
   const name = document.querySelector('#name').value;
   const username = document.querySelector('#username').value;
@@ -64,6 +66,7 @@ const loginBtn = document.querySelector('.loginbtn');
 loginBtn.addEventListener('click', () => {
   const email = document.querySelector('#inUsr').value.trim();
   const password = document.querySelector('#inPass').value;
+  alert('ok')
   auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
