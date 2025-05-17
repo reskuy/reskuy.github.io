@@ -1,3 +1,4 @@
+
 // Grid Options: Contains all of the Data Grid configurations
 const gridOptions = {
     // Row Data: The data to be displayed.

@@ -13,10 +13,20 @@ async function loadPage(page) {
     const res = await fetch(path);
     const html = await res.text();
     app.innerHTML = html;
+    // Re-execute script tags
+    const scripts = app.querySelectorAll('script');
+    scripts.forEach((oldScript) => {
+      const newScript = document.createElement('script');
+      if (oldScript.type) newScript.type = oldScript.type;
+      if (oldScript.src) {
+        newScript.src = oldScript.src;
+      } else {
+        newScript.textContent = oldScript.textContent;
+      }
+      document.body.appendChild(newScript);
+    });
     history.pushState({}, '', '#' + page);
-    setInterval(() => {
-        checkSideBar()
-    }, 100);
+    checkSideBar()
   } catch (err) {
     app.innerHTML = `<p class="text-red-500">Error loading page: ${err.message}</p>`;
   }
@@ -25,7 +35,7 @@ async function loadPage(page) {
 function router() {
   const hash = location.hash.replace('#', '') || 'login';
   loadPage(hash);
-  // checkSideBar()
+//   checkSideBar()
 }
 
 
@@ -40,11 +50,12 @@ function checkSideBar(){
         const isLoggedIn = localStorage.getItem('logged') == 'true';
 
         if (isLoggedIn) {
-            drawer.classList.remove('hidden');
+            // alert('ok')
+            // drawer.classList.remove('hidden');
             drawer.classList.add('lg:drawer-open');
         } else {
             // drawer.classList.add('hidden');
-            drawer.classList.remove('lg:drawer-open');
+            drawer.classList.remove('lg:drawer-close');
         }
 }
  
