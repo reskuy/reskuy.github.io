@@ -28,7 +28,7 @@ async function loadPage(page) {
         const src = oldScript.src;
         const adjustedSrc = isLocal
         ? src.replace(location.origin + '/', './') // keep relative
-        : src.replace(location.origin + '/', '/lembur/'); // add prefix
+        : src.replace(location.origin + '/', '/'); // add prefix
 
         newScript.src = adjustedSrc;
     } else {
