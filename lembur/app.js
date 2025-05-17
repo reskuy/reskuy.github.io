@@ -16,15 +16,28 @@ async function loadPage(page) {
     // Re-execute script tags
     const scripts = app.querySelectorAll('script');
     scripts.forEach((oldScript) => {
-      const newScript = document.createElement('script');
-      if (oldScript.type) newScript.type = oldScript.type;
-      if (oldScript.src) {
-        newScript.src = oldScript.src;
-      } else {
+    const newScript = document.createElement('script');
+
+    if (oldScript.type) newScript.type = oldScript.type;
+
+    if (oldScript.src) {
+        // Detect if running locally or on GitHub Pages
+        const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
+        
+        // Adjust the path conditionally
+        const src = oldScript.src;
+        const adjustedSrc = isLocal
+        ? src.replace(location.origin + '/', './') // keep relative
+        : src.replace(location.origin + '/', '/lembur/'); // add prefix
+
+        newScript.src = adjustedSrc;
+    } else {
         newScript.textContent = oldScript.textContent;
-      }
-      document.body.appendChild(newScript);
+    }
+
+    document.body.appendChild(newScript);
     });
+
     history.pushState({}, '', '#' + page);
     checkSideBar()
   } catch (err) {
