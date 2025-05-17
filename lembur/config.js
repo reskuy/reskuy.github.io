@@ -1,10 +1,1 @@
-const firebaseConfig = {
-    apiKey: "AIzaSyBlccyouywuj9g8euSsPdZBWOet_nmg06E",
-    authDomain: "app-lembur-amartha.firebaseapp.com",
-    projectId: "app-lembur-amartha",
-    storageBucket: "app-lembur-amartha.firebasestorage.app",
-    messagingSenderId: "68667078727",
-    appId: "1:68667078727:web:08582e9b671529c2ca5962",
-    measurementId: "G-TT8ZWMLSSP"
-};
-export {firebaseConfig};
+const _0x363419=_0x2270;(function(_0x263e39,_0x1cddd3){const _0xa6abb4=_0x2270,_0x4fc276=_0x263e39();while(!![]){try{const _0x5eaf6d=parseInt(_0xa6abb4(0x1ac))/0x1*(-parseInt(_0xa6abb4(0x1ae))/0x2)+-parseInt(_0xa6abb4(0x1b6))/0x3+parseInt(_0xa6abb4(0x1af))/0x4*(parseInt(_0xa6abb4(0x1b9))/0x5)+parseInt(_0xa6abb4(0x1b2))/0x6+-parseInt(_0xa6abb4(0x1b7))/0x7*(parseInt(_0xa6abb4(0x1ad))/0x8)+-parseInt(_0xa6abb4(0x1b8))/0x9+parseInt(_0xa6abb4(0x1ba))/0xa;if(_0x5eaf6d===_0x1cddd3)break;else _0x4fc276['push'](_0x4fc276['shift']());}catch(_0x3c320c){_0x4fc276['push'](_0x4fc276['shift']());}}}(_0x33bb,0x42ba4));function _0x2270(_0x4913be,_0x44cedb){const _0x33bb14=_0x33bb();return _0x2270=function(_0x227080,_0x361456){_0x227080=_0x227080-0x1ac;let _0x5552c5=_0x33bb14[_0x227080];return _0x5552c5;},_0x2270(_0x4913be,_0x44cedb);}const firebaseConfig={'apiKey':_0x363419(0x1b1),'authDomain':_0x363419(0x1b4),'projectId':'app-lembur-amartha','storageBucket':_0x363419(0x1bb),'messagingSenderId':_0x363419(0x1b0),'appId':_0x363419(0x1b3),'measurementId':_0x363419(0x1b5)};export{firebaseConfig};function _0x33bb(){const _0x2f3077=['37900zZPFPX','68667078727','AIzaSyBlccyouywuj9g8euSsPdZBWOet_nmg06E','1356294LqnUmm','1:68667078727:web:08582e9b671529c2ca5962','app-lembur-amartha.firebaseapp.com','G-TT8ZWMLSSP','667512xLOFbh','91567QrHqZk','3774411rKgxNr','185mVkvZH','10263590yvAEwo','app-lembur-amartha.firebasestorage.app','94091LlJvDs','248naqIHq','6YwsMDw'];_0x33bb=function(){return _0x2f3077;};return _0x33bb();}
