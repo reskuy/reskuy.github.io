@@ -36,8 +36,10 @@
     <label for="my-drawer-2" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-white shadow-lg text-base-content min-h-full w-80 p-4">
       <!-- Sidebar content here -->
-      <li class="btn btn-sm btn-outline mb-2"><a><i class="fa fa-home mr-2"></i>  Dashboard</a></li>
-      <li class="btn btn-sm btn-outline"><a onclick="location.hash = 'login';localStorage.removeItem('logged');window.location.reload()">Logout</a></li>
+      <li onclick="location.hash = 'dashboard';" class="btn btn-sm btn-outline mb-2"><a><i class="fa fa-home mr-2"></i>  Dashboard</a></li>
+      <li onclick="location.hash = 'master_type';" class="btn btn-sm btn-outline mb-2"><a ><i class="fa fa-home mr-2"></i>  Type Unit</a></li>
+      <li onclick="location.hash = 'master_rute';" class="btn btn-sm btn-outline mb-2"><a ><i class="fa fa-home mr-2"></i>  Rute</a></li>
+      <li onclick="location.hash = 'login';localStorage.removeItem('logged');window.location.reload()" class="btn btn-sm btn-outline"><a >Logout</a></li>
     </ul>
   </div>
 </div>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Master Type Unit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { db } from '../../config.js';
+    import {
+      collection,
+      addDoc,
+      getDocs,
+      deleteDoc,
+      doc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const itemsRef = collection(db, "master_type_unit");
+
+    // CREATE
+    document.getElementById("addForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const model = document.getElementById("model").value;
+      const tipe = document.getElementById("tipe").value;
+      const transmisi = document.getElementById("transmisi").value;
+      await addDoc(itemsRef, { model, tipe, transmisi });
+      this.reset();
+      loadData();
+    });
+
+    // READ
+    async function loadData() {
+      const table = document.getElementById("dataTable");
+      table.innerHTML = "";
+      const snapshot = await getDocs(itemsRef);
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        table.innerHTML += `
+          <tr class="border-b">
+            <td class="p-2">${data.model}</td>
+            <td class="p-2">${data.tipe}</td>
+            <td class="p-2">${data.transmisi}</td>
+            <td class="p-2 flex flex-wrap gap-2">
+              <button onclick="editItem('${docSnap.id}', '${data.model}', '${data.tipe}', '${data.transmisi}')" class="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+              <button onclick="deleteItem('${docSnap.id}')" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </td>
+          </tr>`;
+      });
+    }
+    loadData();
+
+    // DELETE
+    window.deleteItem = async function (id) {
+      await deleteDoc(doc(db, "master_type_unit", id));
+      loadData();
+    };
+
+    // EDIT
+    window.editItem = function (id, model, tipe, transmisi) {
+      document.getElementById("editId").value = id;
+      document.getElementById("editModel").value = model;
+      document.getElementById("editTipe").value = tipe;
+      document.getElementById("editTransmisi").value = transmisi;
+      document.getElementById("editForm").classList.remove("hidden");
+    };
+
+    // UPDATE
+    document.getElementById("editForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const id = document.getElementById("editId").value;
+      const model = document.getElementById("editModel").value;
+      const tipe = document.getElementById("editTipe").value;
+      const transmisi = document.getElementById("editTransmisi").value;
+      await updateDoc(doc(db, "master_type_unit", id), { model, tipe, transmisi });
+      this.reset();
+      this.classList.add("hidden");
+      loadData();
+    });
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <div class="max-w-4xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Master Type Unit</h1>
+
+    <!-- Form Tambah -->
+    <form id="addForm" class="mb-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+      <input type="text" id="model" placeholder="Model" required class="border px-4 py-2 rounded" />
+      <input type="text" id="tipe" placeholder="Tipe" required class="border px-4 py-2 rounded" />
+      <input type="text" id="transmisi" placeholder="Transmisi" required class="border px-4 py-2 rounded" />
+      <div class="md:col-span-3">
+        <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded w-full">Tambah</button>
+      </div>
+    </form>
+
+    <!-- Tabel Data -->
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="text-left p-2">Model</th>
+            <th class="text-left p-2">Tipe</th>
+            <th class="text-left p-2">Transmisi</th>
+            <th class="text-left p-2">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="dataTable" class="text-gray-700">
+          <!-- Data dari JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Form Edit -->
+    <form id="editForm" class="mt-6 p-4 bg-yellow-100 rounded hidden grid grid-cols-1 md:grid-cols-3 gap-4">
+      <input type="hidden" id="editId" />
+      <input type="text" id="editModel" placeholder="Model" required class="border px-4 py-2 rounded" />
+      <input type="text" id="editTipe" placeholder="Tipe" required class="border px-4 py-2 rounded" />
+      <input type="text" id="editTransmisi" placeholder="Transmisi" required class="border px-4 py-2 rounded" />
+      <div class="md:col-span-3">
+        <button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded w-full">Update</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>

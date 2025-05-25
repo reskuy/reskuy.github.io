@@ -4,7 +4,10 @@ const routes = {
   login: 'views/login/login.html',
   register: 'views/register/register.html',
   about: 'views/about/about.html',
-  dashboard: 'views/dashboard/dashboard.html'
+  dashboard: 'views/dashboard/dashboard.html',
+  master_type:'views/master/type/index.html',
+  master_rute:'views/master/rute/index.html'
+
 };
 
 async function loadPage(page) {

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Master Rute</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script type="module">
+    import { db } from '../../config.js';
+    import {
+      collection,
+      addDoc,
+      getDocs,
+      deleteDoc,
+      doc,
+      updateDoc
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    const itemsRef = collection(db, "master_rute");
+
+    // CREATE
+    document.getElementById("addForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const awal = document.getElementById("ruteAwal").value;
+      const akhir = document.getElementById("ruteAkhir").value;
+      const jarak = parseFloat(document.getElementById("jarak").value);
+      const bensin = parseFloat(document.getElementById("bensin").value);
+      await addDoc(itemsRef, { ruteAwal: awal, ruteAkhir: akhir, jarak, bensin });
+      this.reset();
+      loadData();
+    });
+
+    // READ
+    async function loadData() {
+      const table = document.getElementById("dataTable");
+      table.innerHTML = "";
+      const snapshot = await getDocs(itemsRef);
+      snapshot.forEach((docSnap) => {
+        const data = docSnap.data();
+        table.innerHTML += `
+          <tr class="border-b">
+            <td class="p-2">${data.ruteAwal}</td>
+            <td class="p-2">${data.ruteAkhir}</td>
+            <td class="p-2">${data.jarak} km</td>
+            <td class="p-2">${data.bensin} L</td>
+            <td class="p-2 flex flex-wrap gap-2">
+              <button onclick="editItem('${docSnap.id}', '${data.ruteAwal}', '${data.ruteAkhir}', ${data.jarak}, ${data.bensin})" class="bg-blue-500 text-white px-3 py-1 rounded">Edit</button>
+              <button onclick="deleteItem('${docSnap.id}')" class="bg-red-500 text-white px-3 py-1 rounded">Delete</button>
+            </td>
+          </tr>`;
+      });
+    }
+    loadData();
+
+    // DELETE
+    window.deleteItem = async function (id) {
+      await deleteDoc(doc(db, "master_rute", id));
+      loadData();
+    };
+
+    // EDIT
+    window.editItem = function (id, awal, akhir, jarak, bensin) {
+      document.getElementById("editId").value = id;
+      document.getElementById("editRuteAwal").value = awal;
+      document.getElementById("editRuteAkhir").value = akhir;
+      document.getElementById("editJarak").value = jarak;
+      document.getElementById("editBensin").value = bensin;
+      document.getElementById("editForm").classList.remove("hidden");
+    };
+
+    // UPDATE
+    document.getElementById("editForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const id = document.getElementById("editId").value;
+      const ruteAwal = document.getElementById("editRuteAwal").value;
+      const ruteAkhir = document.getElementById("editRuteAkhir").value;
+      const jarak = parseFloat(document.getElementById("editJarak").value);
+      const bensin = parseFloat(document.getElementById("editBensin").value);
+      await updateDoc(doc(db, "master_rute", id), { ruteAwal, ruteAkhir, jarak, bensin });
+      this.reset();
+      this.classList.add("hidden");
+      loadData();
+    });
+  </script>
+</head>
+<body class="bg-gray-100 min-h-screen p-6">
+
+  <div class="max-w-5xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-4">Master Rute</h1>
+
+    <!-- Form Tambah -->
+    <form id="addForm" class="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input type="text" id="ruteAwal" placeholder="Rute Awal" required class="border px-4 py-2 rounded" />
+      <input type="text" id="ruteAkhir" placeholder="Rute Akhir" required class="border px-4 py-2 rounded" />
+      <input type="number" id="jarak" placeholder="Jarak (km)" required step="0.1" class="border px-4 py-2 rounded" />
+      <input type="number" id="bensin" placeholder="Bensin (liter)" required step="0.1" class="border px-4 py-2 rounded" />
+      <div class="md:col-span-2">
+        <button type="submit" class="bg-green-500 text-white px-6 py-2 rounded w-full">Tambah</button>
+      </div>
+    </form>
+
+    <!-- Tabel Data -->
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="text-left p-2">Rute Awal</th>
+            <th class="text-left p-2">Rute Akhir</th>
+            <th class="text-left p-2">Jarak</th>
+            <th class="text-left p-2">Bensin</th>
+            <th class="text-left p-2">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="dataTable" class="text-gray-700">
+          <!-- Diisi JS -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Form Edit -->
+    <form id="editForm" class="mt-6 p-4 bg-yellow-100 rounded hidden grid grid-cols-1 md:grid-cols-2 gap-4">
+      <input type="hidden" id="editId" />
+      <input type="text" id="editRuteAwal" placeholder="Rute Awal" required class="border px-4 py-2 rounded" />
+      <input type="text" id="editRuteAkhir" placeholder="Rute Akhir" required class="border px-4 py-2 rounded" />
+      <input type="number" id="editJarak" placeholder="Jarak (km)" required step="0.1" class="border px-4 py-2 rounded" />
+      <input type="number" id="editBensin" placeholder="Bensin (liter)" required step="0.1" class="border px-4 py-2 rounded" />
+      <div class="md:col-span-2">
+        <button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded w-full">Update</button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
